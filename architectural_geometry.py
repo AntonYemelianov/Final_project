@@ -25,4 +25,6 @@ def create_floor(floor_width=(random.uniform(0.1, 50)),
                           depth=floor_length,
                           name="floor_#"
         )[0]
-        cmds.move
+        cmds.move(
+            (position[0], position[1] / 2.0, position[2], wall
+        )
