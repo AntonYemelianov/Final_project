@@ -11,9 +11,46 @@ import architectural_geomentry as geo
 
 
 #Confirguration Data
+BUILDRES = {
+"floor":   geo.create_floor,
+"wall":    geo.create_wall,
+"roof":    geo.create_roof,
+"window":  geo.create_window,
+"door":    geo.create_door,
+"porch":   geo.create_porch,
+"chimney": geo.create_chimney,
+}
+
+TYPE_MATERIAL = {
+"floor": "floor",
+"wall": "wall",
+"roof": "roof",
+"porch": "porch",
+"chimney": "chimney"
+
 
 #Dispatcher
 
 #Driver
+def build_house(config=None):
+    """Build a house from confiuration data.
 
+    Args:
+       config (list): List of conifg dicts. Defaults to HOUSE_CONFIG.
+
+    Returns:
+        list: Names of all created Maya nodes.
+    """
+    if config is None:
+        config = HOUSE_CONFIG
+
+    cmds.file(new=True, force=True)
+
+    shaders = {}
+    for key, (name, color) in MATERIALS.items():
+        shaders[key] = mat.create_material(name,color)
+
+    ground = cmds.polyPlane( width=50, height=50, sx=1, sy=1, name="ground_#"
+                           )[0]
+    results = [ground]
 #Main
