@@ -54,3 +54,5 @@ def build_house(config=None):
                            )[0]
     results = [ground]
 #Main
+if __name__ == "__main__":
+    build_house()
