@@ -135,5 +135,22 @@ try:
 
     return wall
 
+if __name__ == "__main__":
+    cmds.file(new=True, force=True)
+
+    create_body
+    create_porch
+    create_roof
+    create_chimney
+    create_window
+    create_door
+
+    # Test error handling
+    print("\n--- Error handling tests ---")
+    create_body(body_width=-1, body_height=-1, body_length=-1) # should warn, use defaults
+
+    cmds.viewFit(allObjects=True)
+    print("house_geometry self-test complete!")
+
       
                  
