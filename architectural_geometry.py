@@ -88,6 +88,7 @@ if porch_length < 0.1:
                           height=stair_height,
                           depth=porch_length,
                           name="stair_#
+        )                      
         
     except Exception as error:
     cmds.warning("Failed to create porch: {}".format(error))
@@ -134,6 +135,50 @@ try:
       return None
 
     return wall
+
+def create_chimney(chimney_radius=0.2, chimney_height=1,
+                   chimney_top_radius=chimney_radius * 1.5,
+                   chimney_top_height=chimney_height * 0.2,
+                   position=(0, 0, 0)):
+    """Create a chimney consisting of two cylinders
+
+    Args:
+        chimney_radius(float): Chimney radius. Default 0.2.
+        chimney_height(float): Chimney's height. Default 1.
+        chimney_top_radius: Radius of the chimney topper. 
+        Default to chimney_top_radius=chimney_radius * 1.5
+
+    Returns:
+        str: Name of the gatehouse group, or None on failure.
+    """
+if DEBUG:
+    print("[DEBUG] create_chimney: cr={}, ch={} pos={}".format(
+      chimney_radius, chimney_height, position))
+
+if roof_width < floor_length + wall_thickness:
+    cmds.warning("invalid roof length {} -- using default 5".format(wall_length))
+    roof_width=10
+if roof_height < 0.1:
+    cmds.warning("invalid wall height {} -- using default 0.5".format(wall_height))
+    roof_height=0.5
+if roof_height < 0.1:
+    cmds.warning("invalid wall thickness {} -- using default 5".format(wall_thickness))
+    roof_length=10
+try:
+      roof = cmds.polyCube(width=roof_width, 
+            height=roof_height, 
+            depth=roof_length,
+            name="roof_#"
+        )[0]
+  cmds.move(
+      (position[0], position[1] / 2.0, position[2], roof
+  )
+    except Exception as error:
+      cmds.warning("Failed to create roof: {}".format(error))
+      return None
+
+    return wall
+                     
 
 if __name__ == "__main__":
     cmds.file(new=True, force=True)
