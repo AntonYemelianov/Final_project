@@ -9,6 +9,13 @@ Assembles a house from configuration data using the builders dispatcher pattern.
 import maya.cmds as cmds
 import architectural_geomentry as geo
 
+HOUSE CONFIG = [
+    #floor
+    {"type":"floor", "floor_width": 8, "floor_thickness": 1, "floor_length": 12,
+     "position": (0, 0 ,0)},
+    #4 walls around the floor
+    {"type":"wall", "wall_width": 8, "floor_thickness": 1, "floor_length": 12,
+     "position": (0, 0 ,0)},
 
 #Confirguration Data
 BUILDRES = {
