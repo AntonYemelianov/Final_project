@@ -100,27 +100,27 @@ def create_roof(roof_width=floor_width+wall_thickness+0.1,
                ):
     """Creates a rectangular roof
 Args:
-        wall_length (float):    Floor width. Default 5.
-        wall_height (float):    Floor thickness. Default 3.
-        wall_thickness (float): Floor length. Default 0.2.
-        position (tuple):  (x, y, z) center of the floor base.
+        roof_width (float):    Roof width. Default 5.
+        wall_height (float):    Roof height. Default 3.
+        wall_length (float): Roof length. Default 5.
+        position (tuple):  (x, y, z) center of the roof base.
 
     Returns:
-        Str: Name of the wall transform node or none if failure.
+        Str: Name of the roof transform node or none if failure.
     """
 if DEBUG:
-    print("[DEBUG] create_wall: wl={}, wh{}, wt={}, pos={}".format(
-      roof_length, roof_height, roof_thickness, position))
+    print("[DEBUG] create_roof: rw={}, rh{}, rl={}, pos={}".format(
+      roof_width, roof_height, roof_length, position))
 
-if roof_width < floor_length + wall_thickness:
+if roof_width < body_width
     cmds.warning("invalid roof length {} -- using default 5".format(wall_length))
-    roof_width=10
+    roof_width=body_width
 if roof_height < 0.1:
     cmds.warning("invalid wall height {} -- using default 0.5".format(wall_height))
     roof_height=0.5
-if roof_height < 0.1:
-    cmds.warning("invalid wall thickness {} -- using default 5".format(wall_thickness))
-    roof_length=10
+if roof_length < :
+    cmds.warning("invalid wall thickness {} -- using default body_width * 1.2".format(wall_thickness))
+    roof_length=body_width
 try:
       roof = cmds.polyCube(width=roof_width, 
             height=roof_height, 
@@ -165,19 +165,19 @@ if roof_height < 0.1:
     cmds.warning("invalid wall thickness {} -- using default 5".format(wall_thickness))
     roof_length=10
 try:
-      roof = cmds.polyCube(width=roof_width, 
+      roof = cmds.polyCylinder(radius=chimney_radius, 
             height=roof_height, 
-            depth=roof_length,
-            name="roof_#"
+            
+            name="chimney_#"
         )[0]
   cmds.move(
       (position[0], position[1] / 2.0, position[2], roof
   )
     except Exception as error:
-      cmds.warning("Failed to create roof: {}".format(error))
-      return None
+        cmds.warning("Failed to create chimney: {}".format(error))
+        return None
 
-    return wall
+    return chimney
                      
 
 if __name__ == "__main__":
