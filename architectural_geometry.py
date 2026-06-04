@@ -84,14 +84,38 @@ if wall_thickness < 1:
         )
     except Exception as error:
 
-def create_roof():
-  """Creates a rectangular or pyramidal roof(random)"""
+def create_roof(roof_width=floor_width+wall_thickness+0.1,
+               roof_height=0.5,
+               roof_length=floor_length+wall_thickness+0.1
+               ):
+    """Creates a rectangular roof
+Args:
+        wall_length (float):    Floor width. Default 5.
+        wall_height (float):    Floor thickness. Default 3.
+        wall_thickness (float): Floor length. Default 0.2.
+        position (tuple):  (x, y, z) center of the floor base.
 
-    #Define available roof shapes
-    roof_shapes = ["cube", "pyramid"]
-    #Make a random choice 
-    roof_choice = random.choice(roof_shapes)
-    # if-else function deciding which shape to create based on the random choice
-    if roof_choice == "cube":
-    else:
+    Returns:
+        Str: Name of the wall transform node or none if failure.
+    """
+if DEBUG:
+    print("[DEBUG] create_wall: wl={}, wh{}, wt={}, pos={}".format(
+      roof_length, roof_height, roof_thickness, position))
+
+if roof_width < floor_length + wall_thickness:
+    cmds.warning("invalid roof length {} -- using default 5".format(wall_length))
+    roof_width=10
+if roof_height < 0.1:
+    cmds.warning("invalid wall height {} -- using default 0.5".format(wall_height))
+    roof_height=0.5
+if roof_height < 0.1:
+    cmds.warning("invalid wall thickness {} -- using default 5".format(wall_thickness))
+    roof_length=10
+try:
+      roof = cmds.polyCube(width=roof_width, 
+            height=roof_height, 
+            depth=roof_length,
+            name="roof_#"
+        )[0]
+      
                  
