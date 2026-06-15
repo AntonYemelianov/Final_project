@@ -1,5 +1,5 @@
 """
-house_materials.py -- Material creation and assignment for fortress.
+house_materials.py -- Material creation and assignment for a house.
 ========================================================================
 DIGM 131 Final | Author: Anton Yemelianov
 
@@ -71,7 +71,7 @@ if __name__ == "__main__":
     cmds.file(new=True, force=True)
 
     cube = cmds.polyCube(name="test_cube")[0]
-    stone = create_material("test_concrete", (1.0, 1.0, 1.0))
+    concrete = create_material("test_concrete", (1.0, 1.0, 1.0))
     assign_material(cube, concrete)
 
     cmds.viewFit(allObjects=True)
