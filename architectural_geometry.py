@@ -1,4 +1,18 @@
+"""
+architectural_geometry.py -- Builder for a simple house structure
+=========================================================================
+DIGM 131 Final | Author: Anton Yemelianov
+
+Each function creates one type of house element with input
+validation and debug logging. No materials or scene logic here.
+
+Usage:
+    import house_geometry as geo
+    geo.create_roof(roof_length=10, roof_height=1, roof_width=5, position=(0, 0, 8))
+"""
+
 import maya.cmds as cmds
+import random
 
 DEBUG = True
 
@@ -22,28 +36,31 @@ def create_body(body_width=5.0, body_height=0.3, body_length=5.0,
 
     if body_width < 1.0:
         cmds.warning("invalid body width {} -- using default 5".format(body_width))
-        body_width=5
+        body_width = 5
     if body_height < 0.5:
         cmds.warning("invalid body height {} -- using default 0.5".format(body_height))
-        body_height=3
+        body_height = 3
     if body_length < 1.0:
         cmds.warning("invalid body length {} -- using default 5".format(body_length))
-        body=length=5
+        body_length = 5
 
     try:
-        floor = cmds.polyCube(width=body_width, 
+        body = cmds.polyCube(width=body_width,
                           height=body_height,
                           depth=body_length,
                           name="body_#"
         )[0]
         cmds.move(
-            (position[0], position[1] + floor_thickness / 2.0, position[2], wall
+              position[0],
+              position[1] + body_height / 2.0,
+              position[2],
+              body
         )
-      except Exception as error:
-          cmds.warning("Failed to create body: {}".format(error))
-          return none
+    except Exception as error:
+            cmds.warning("Failed to create body: {}".format(error))
+            return None
 
-      return body
+    return body
 
 def create_door(door_width=0.5, door_height=1, door_thickness=0.1,
                 position=(0, 0, 0)):
@@ -90,6 +107,59 @@ def create_door(door_width=0.5, door_height=1, door_thickness=0.1,
         return None
       
     return door
+
+
+def create_window(window_width=0.5,
+                  window_height=0.5,
+                  window_thickness=0.1,
+                  position=(0, 0, 0)):
+    """Create a rectangular (default square) window
+
+    Args:
+        window_width (float):     Window width. Default 0.5.
+        window_height (float):    Window Height. Default 1.
+        window_thickness (float): Window length. Default 0.1.
+        position (tuple):  (x, y, z) center of the window.
+
+    Returns:
+        Str: Name of the window transform node or none if failure.
+    """
+    if DEBUG:
+        print("[DEBUG] create_window: ww={}, wh{}, wt={}, pos={}".format(
+      window_width, window_height, window_thickness, position))
+
+    if window_width < 0.1:
+        cmds.warning("invalid window width {} -- using default 0.5".format(window_width))
+        window_width = 0.5
+    if window_height < 0.1:
+        cmds.warning("invalid window height {} -- using default 1".format(window_height))
+        window_height = 0.5
+    if window_thickness < 0.05:
+        cmds.warning("invalid window thickness {} -- using default 0.1".format(window_length))
+        window_thickness = 0.1
+      
+    try:
+        window = cmds.polyCube(
+                             width=window_width, 
+                             height=window_height,
+                             depth=window_thickness,
+                             name="window_#"
+        )[0]
+        displace1 = -3/4 * body_width
+        displace2 = 3/4 * body_width
+        random_displace=random.choice([displace1, displace2])
+      
+        cmds.move(
+            position[0] + 
+            position[1] + window_height / 2.0 + porch_height,
+            position[2] + window_length / 2.0,
+            window
+        )
+    except Exception as error:
+        cmds.warning(warning("Failed to create window: {}".format(error))
+        return None
+      
+    return window
         
       
 
