@@ -312,6 +312,13 @@ def create_chimney(chimney_base_radius=0.2,
             position[1] + chimney_top_height / 2.0 + chimney_base_height,
             position[2]
         )
+        cmds.group(chimney_base, chimney_top, name="chimney_#")
+        cmds.move(
+            position[0],
+            position[1] + body_height + roof_height,
+            position[2],
+            chimney
+        )
     except Exception as error:
         cmds.warning("Failed to create chimney: {}".format(error))
         return None
